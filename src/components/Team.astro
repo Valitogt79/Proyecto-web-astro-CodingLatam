@@ -1,0 +1,59 @@
+---
+import Teammate from "./Teammate.astro";
+import checkIcon from "../images/check.svg";
+import userIcon from "../images/Icon.svg";
+import tropyIcon from "../images/trophy.svg";
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+
+interface ITeammate {
+  id: number;
+  image: string;
+  name: string;
+  area: string;
+  slogan: string;
+}
+
+const { data: teamData } = await getEntry("teammates", "teammates");
+const { teammates } = teamData;
+---
+
+<section class="bg-gray pt-12 px-0 b-24">
+  <div class="container grid grid-1 gap-5 lg:grid-cols-[1fr_2fr_auto]">
+    <div class="info">
+      <h2>We are proud of our design team</h2>
+      <p>
+        Just sit back and relax while we take care of your business needs for
+        you.
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-[100px]">
+      <div class="flex flex-col item-center text-center md:gap-3 flex-1">
+        <div class="bg-skyblue rounded-full p-4 w-fit">
+          <Image class="h-[26px]" src={checkIcon} alt="Check" />
+        </div>
+        <h3 class="text-[41px]">1000+</h3>
+        <p>Completed Projects</p>
+      </div>
+      <div class="flex flex-col item-center text-center">
+        <div class="bg-skyblue rounded-full p-4 w-fit">
+          <Image class="h-[26px]" src={userIcon} alt="User" />
+        </div>
+        <h3 class="text-[41px]">50k</h3>
+        <p>Happy Customers</p>
+      </div>
+      <div class="flex flex-col item-center text-center">
+        <div class="bg-skyblue rounded-full p-4 w-fit">
+          <Image class="h-[26px]" src={tropyIcon} alt="Tropy" />
+        </div>
+        <h3 class="text-[41px]">20k</h3>
+        <p>Awards Won</p>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-1 gap-5 col-span-full md:grid-cols-2 lg:grid-cols-4"
+    >
+      {teammates.map((item: ITeammate) => <Teammate {...item} />)}
+    </div>
+  </div>
+</section>
